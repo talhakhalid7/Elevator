@@ -229,14 +229,14 @@ namespace ElevatorApp
         {
             if (!File.Exists(_logFilePath))
             {
-                using (FileStream fs = File.Create(_logFilePath))
-                {
+                FileStream fs = File.Create(_logFilePath);
+                fs.Close();
                     // writing elevator logs to newly created file
                     using (var writer = File.AppendText(_logFilePath))
                     {
                         writer.WriteLine(message);
                     }
-                }
+                
             }
             else
             {
@@ -262,7 +262,8 @@ namespace ElevatorApp
             if (File.Exists(elevator._logFilePath))
             {
                 // Clear the content of the file
-                File.WriteAllText(elevator._logFilePath, string.Empty);
+                File.Delete(elevator._logFilePath);
+                
             }
             
 
